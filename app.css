@@ -1,4 +1,51 @@
 /* Your styles should be mobile-first and responsive */
+body {
+  margin: 0;
+}
+
+header {
+  background-color: white;
+  margin-bottom: 40px;
+}
+
+header h1 {
+  margin: 0;
+  font-family: "Times New Roman", serif;
+  font-size: 48px;
+  color: black;
+  text-align: center;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+main p {
+  font-family: "Times New Roman", serif;
+  font-size: 28px;
+  margin: 10px;
+}
+
+ol li {
+  font-size: 24px;
+  margin: 10px;
+}
+
+.startPage, .quizQuestion, .quizResponse, .quizResults {
+  margin: 25px;
+  padding: 30px;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+#startQuiz, .submit, .startOver {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
+
+input[type="checkbox"]
+
 
 /** 
   * If you are unclear on how to utilize a mobile-first, responsive technique to write your CSS, here is an example: 
