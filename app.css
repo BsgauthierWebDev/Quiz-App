@@ -1,28 +1,27 @@
 /* Your styles should be mobile-first and responsive */
-body {
-  margin: 0;
-}
-
-header {
-  background-color: white;
-  margin-bottom: 40px;
-}
-
-header h1 {
-  margin: 0;
-  font-family: "Times New Roman", serif;
-  font-size: 48px;
-  color: black;
+h1 {
   text-align: center;
-  align-items: center;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  font-family: "Times New Roman", serif;
 }
 
-main p {
-  font-family: "Times New Roman", serif;
+body {
+  background-color: white;
+  color: black;
+}
+
+h1 {
+  margin-left: 25px;
+}
+p {
   font-size: 28px;
-  margin: 10px;
+}
+
+.welcome, .quiz-interface, .answer-response, .quiz-results {
+  margin: 20px;
+  padding: 25px;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
 }
 
 ol li {
@@ -30,21 +29,17 @@ ol li {
   margin: 10px;
 }
 
-.startPage, .quizQuestion, .quizResponse, .quizResults {
-  margin: 25px;
-  padding: 30px;
-  border: 2px solid black;
-  display: flex;
-  flex-direction: column;
+.quiz-results {
+  text-align: center;
 }
 
-#startQuiz, .submit, .startOver {
+.submit-answer, #startQuiz, .restart-quiz {
   display: block;
   text-align: center;
   margin: 0 auto;
 }
 
-input[type="checkbox"]
+input[type="checkbox"] {transform: scale(1.4)}
 
 
 /** 
