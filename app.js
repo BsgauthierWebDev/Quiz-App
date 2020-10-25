@@ -190,10 +190,15 @@ function generateQuizResultsString() {
   return `
     <div class='quiz-results'>
       <p>
-       The Quiz is over.
-         </p>
-          <p>You scored ${store.score} out of ${store.questions.length * 20}</p>            
-        <button class="restart-quiz">Restart Quiz</button>      
+       Congratulations, you finished!
+      </p>
+      <p>
+        You scored ${store.score} out of ${store.questions.length * 20}!
+      </p>  
+      <p>
+        To try again, click the Restart Quiz button below.
+      </p>          
+      <button class="restart-quiz">Restart Quiz</button>      
     </div>   
 `;
 }
