@@ -29,6 +29,8 @@ ol li {
   margin: 10px;
 }
 
+input[type="radio"] {transform: scale(1.4)}
+
 .quiz-results {
   text-align: center;
 }
@@ -39,7 +41,6 @@ ol li {
   margin: 0 auto;
 }
 
-input[type="checkbox"] {transform: scale(1.4)}
 
 
 /** 
