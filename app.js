@@ -6,8 +6,8 @@
 const store = {
   // 5 or more questions are required
   questions: [
-    {
-      question: 'What is the material used to freeze Han Solo in <i>The Empire Strikes Back</i>?',
+    { // Question 1
+      question: 'What is the material used to freeze Han Solo in The Empire Strikes Back?',
       answers: [
         'Liquid Nitrogen',
         'Adamantium',
@@ -16,7 +16,7 @@ const store = {
       ],
       correctAnswer: 'Carbonite'
     },
-    {
+    { // Question 2
       question: 'In which movie does Bucky Barnes, Steve Rogers’ childhood friend, return from his presumed death?',
       answers: [
         'Captain America: The First Avenger',
@@ -26,7 +26,7 @@ const store = {
       ],
       correctAnswer: 'Captain America: The Winter Soldier'
     },
-    {
+    { // Question 3
       question: 'What is “Indiana” Jones’ real first name?',
       answers: [
         'Henry',
@@ -36,17 +36,17 @@ const store = {
       ],
       correctAnswer: 'Henry'
     },
-    {
+    { // Question 4
       question: 'In the movie Blade Runner, what is Rick Deckard tracking?',
       answers: [
-        'A Dog',
+        'A Drug Dealer',
         'An Accountant',
-        'A Replicant',
-        'A Drug Dealer'
+        'A Dog',
+        'A Replicant'
       ],
       correctAnswer: 'A Replicant'
     },
-    {
+    { // Question 5
       question: 'In the Harry Potter universe, what is a horcrux?',
       answers: [
         'An object used to contain a piece of Voldemort’s soul',
@@ -59,7 +59,12 @@ const store = {
   ],
   quizStarted: false,
   questionNumber: 0,
-  score: 0
+  submittingAnswer: false,
+  score: 0,
+
+  currentQuestionState: {
+    answerArray: []
+  }
 };
 
 /**
@@ -115,7 +120,7 @@ function generateQuizInterfaceString(questionObject) {
   `;
 }
 
-function generateAnswerResults() {
+function generateAnswerResults(){
   let answerArray = store.currentQuestionState.answerArray;
 
   const buttons = {
@@ -123,13 +128,14 @@ function generateAnswerResults() {
     results: '<button type="submit" class="see-results" autofocus>See Results</button>'
   };
 
-let correctResponse = '"${answerArray[1]}" is correct!';
-let incorrectResponse = '"${answerArray[2]}" is incorrect. The correct answer is <br><br>"${answerArray[1]}"';
+  let correctResponse = `"${answerArray[1]}" is correct`;
+  let incorrectResponse = `${answerArray[2]} is not correct. The correct answer is<br><br>
+  "${answerArray[1]}"`;
 
-let isLastQuestion = (store.questionNumber + 1) === (store.questions.length);
-
-return `
-    <div>
+  let isLastQuestion = (store.questionNumber + 1) === (store.questions.length);
+  
+  return `
+    <div class="answer-response">
     <form>
     <p>${answerArray[0] === true ? correctResponse : incorrectResponse}</p>
     <p> Score: ${store.score}</p>
@@ -139,7 +145,8 @@ return `
   `;
 }
 
-function generateQuizAnswers(answers) {
+
+function generateQuizAnswers(answers){
   let answerArray = [];
   let indexArray = [];
   answers.forEach(answer => {
@@ -147,22 +154,23 @@ function generateQuizAnswers(answers) {
     indexArray.push(answers.indexOf(answer));
   });
   console.log(indexArray);
-  return answerArray.map(answer => stringifyAnswerArray(answer)).join(" ");
+  return answerArray.map(answer => stringifyAnswerArray(answer)).join('');
 }
 
-function stringifyAnswerArray(answer) {
+function stringifyAnswerArray(answer){
   let questionNumber = store.questionNumber;
   let name = store.questions[questionNumber].answers.indexOf(answer);
   console.log(name);
 
   return `
-  <li>
-    <div>
-    <input type="radio" name="answer" id="answer-${name}" data-answer="${answer}"></input>
-    <label for="answer-${name}"> ${answer}</label>
-    </div>
-  </li>
-    `;
+    <li>
+      <div class="answer-container">
+      <input type="radio" name="answer" id="answer-${name}" data-answer="${answer}">
+      <label for="answer-${name}"> ${answer}</label>
+     
+      </div>
+    </li>
+  `;
 }
 
 function generateQuizResultsString() {
@@ -230,22 +238,20 @@ function nextQuestion() {
 }
 
 function validateCorrectAnswer() {
-  let radios = $("input:radio[name=answer]");
-  let selectedAnswer = $('input[name="answer"]:checked').data("answer");
+  let radios = $('input:radio[name=answer]');
+  let selectedAnswer = $('input[name="answer"]:checked').data('answer');
   let questionNumber = store.questionNumber;
-  let questionAnswer = store.questions[questionNumber].correctAnswer;
+  let correctAnswer = store.questions[questionNumber].correctAnswer;
 
   if (radios.filter(':checked').length === 0) {
-    alert('Please choose an answer');
+    alert('Please select an answer.');
     return;
-    }
-    else {
-      store.submittingAnswer = true;
-      if(selectedAnswer === correctAnswer) {   
-        store.score += 20;
-        store.currentQuestionState.answerArray = [true, correctAnswer, selectedAnswer];
-    }
-    else {
+  } else {
+    store.submittingAnswer = true;
+    if(selectedAnswer === correctAnswer){
+      store.score += 10;
+      store.currentQuestionState.answerArray = [true, correctAnswer, selectedAnswer];
+    } else {
       store.currentQuestionState.answerArray = [false, correctAnswer, selectedAnswer];
     }
   }
@@ -268,7 +274,7 @@ function restartQuiz() {
 
 // These functions handle events (submit, click, etc)
 //This is where you start to flesh out what each event does
-function handleQuizBeginSubmit() {
+function handleBeginQuizSubmit(){
   $('main').on('click', '#startQuiz', (event) =>{
     event.preventDefault();
     startQuiz();
@@ -276,7 +282,7 @@ function handleQuizBeginSubmit() {
   });
 }
 
-function handleSubmitAnswer() {
+function handleSubmitAnswer(){
   $('main').on('click', '.submit-answer', (event) =>{
     event.preventDefault();
     console.log('Submitting Your Answer');
@@ -285,7 +291,7 @@ function handleSubmitAnswer() {
   });
 }
 
-function handleNextQuestionSubmit() {
+function handleNextQuestionSubmit(){
   $('main').on('click', '.next-question', (event) =>{
     event.preventDefault();
     nextQuestion();
@@ -293,27 +299,28 @@ function handleNextQuestionSubmit() {
   });
 }
 
-function handleSeeResultsSubmit() {
-  $('main').on('click', '.see-results', (event) =>{
+function handleSeeResultsSubmit(){
+  $('main').on('click', '.see-results', (event) => {
     event.preventDefault();
     seeResults();
     renderQuiz();
   });
 }
 
-function handleRestartQuizSubmit() {
-  $('main').on('click', '.restart-quiz', (event) =>{
+function handleRestartQuizSubmit(){
+  $('main').on('click', '.restart-quiz', (event) => {
     event.preventDefault();
     restartQuiz();
     renderQuiz();
   });
 }
 
-//This handles loading everything at the beginning of the page load
-//This is where you begin mapping you plan for the page
-function handleQuiz() {
+
+// This function will launch all other functions after the page is loaded
+function handleQuiz (){
   renderQuiz();
-  handleQuizBeginSubmit();
+  handleBeginQuizSubmit();
+  handleSubmitAnswer();
   handleNextQuestionSubmit();
   handleRestartQuizSubmit();
   handleSeeResultsSubmit();
