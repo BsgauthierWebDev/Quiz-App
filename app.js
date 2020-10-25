@@ -52,7 +52,7 @@ const store = {
         'An object used to contain a piece of Voldemort’s soul',
         'A library of banned spellbooks',
         'A feast in celebration of a wizard graduating from school',
-        'An object a hooker uses to get around if she breaks her leg'
+        'An object a hooker uses to get around after breakingthi her leg'
       ],
       correctAnswer: 'An object used to contain a piece of Voldemort’s soul'
     }
@@ -249,7 +249,7 @@ function validateCorrectAnswer() {
   } else {
     store.submittingAnswer = true;
     if(selectedAnswer === correctAnswer){
-      store.score += 10;
+      store.score += 20;
       store.currentQuestionState.answerArray = [true, correctAnswer, selectedAnswer];
     } else {
       store.currentQuestionState.answerArray = [false, correctAnswer, selectedAnswer];
