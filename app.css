@@ -62,19 +62,7 @@ input[type="radio"] {transform: scale(1.4)}
   margin: 10px;
 }
 
-@media all and (min-width: 600px) {
-  header {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 25px;
-  }
 
-  .group {
-    display: flex;
-    flex-direction: row;
-    margin: 10px;
-  }
-}
 
 /** 
   * If you are unclear on how to utilize a mobile-first, responsive technique to write your CSS, here is an example: 
